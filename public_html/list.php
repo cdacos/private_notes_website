@@ -17,10 +17,10 @@
   }
 ?>
 <form action='' method='get'>
-  <input type='text' name='jump' />
+  <input type='text' name='jump' style="width: 8em" />
   <button type='submit'>Jump</button>
 </form>
-<ul>
+<ul style="list-style-type: none; padding: 0; padding-left: 5px">
 <?php
   $lst = getDirContents(getNotesDir());
   rsort($lst);

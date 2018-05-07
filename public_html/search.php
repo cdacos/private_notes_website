@@ -20,7 +20,7 @@
       <?php
         foreach ($results as $result) {
             $details = explode(":", $result);
-            $path = getRelativePath(getFilePath($details[0]));
+            $path = getRelativePath(getFilePath(substr($details[0], 9)));
             echo "<tr><td><a href='file.php?path=$path&line=$details[1]'>".$path."</a></td><td class='mono'>".$details[2]."</td></tr>\n"; 
         }
       ?>
