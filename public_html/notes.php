@@ -13,9 +13,11 @@
   <tr>
     <td style='height: 100%; width: 200px'><iframe id='list' src='list.php' style='height: 100%; width: 200px' frameBorder='0'></iframe></td>
     <td style='height: 100%'><iframe id='main' style='height: 100%; width: 100%' frameBorder='0'></iframe></td>
-  </tr>
-  <tr>
-    <td colspan='2' style='height: 200px'><iframe id='search' src='search.php' style='height: 200px; width: 100%' frameBorder='0'></iframe></td>
+    <td style='height: 100%; width: 250px'><iframe id='search' src='search.php' style='height: 100%; width: 250px;' frameBorder='0'></iframe></td>
   </tr>
 </table>
+ZZZZ
+<style>
+  body { overflow: hidden; }
+</style>
 <?php include 'html_footer.php'; ?>

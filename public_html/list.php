@@ -38,4 +38,7 @@
 <?php
   }
 ?>
+<style>
+  body { background-color: #F0F0F0; }
+</style>
 <?php include 'html_footer.php'; ?>

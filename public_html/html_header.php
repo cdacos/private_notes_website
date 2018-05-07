@@ -28,7 +28,7 @@
       body {
         font-family: 'Source Sans Pro', sans-serif;
       }
-      .mono {
+      textarea, .mono {
         font-family: 'Ubuntu Mono', monospace;
       }
       .footer {
