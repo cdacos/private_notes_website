@@ -56,6 +56,6 @@ parent.document.onkeydown = handleKeyShortcut;
 </form>
 <style>
   body { background-color: #FFFFEE; overflow: hidden; }
-  textarea { background-color: #FFFFEE; border: 0; padding: 5px; overflow-y: scroll; overflow-x: hidden; }
+  textarea { background-color: #FFFFEE; border: 0; padding: 10px; overflow-y: scroll; overflow-x: hidden; }
 </style>
 <?php include 'html_footer.php'; ?>

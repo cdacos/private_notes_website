@@ -16,8 +16,13 @@
     }
   }
 ?>
+<style>
+  body {
+    padding: 5px;
+  }
+</style>
 <form action='' method='get'>
-  <input type='text' name='jump' style="width: 8em" />
+  <input type='text' name='jump' style="width: 10em" />
   <button type='submit'>Jump</button>
 </form>
 <ul style="list-style-type: none; padding: 0; padding-left: 5px">

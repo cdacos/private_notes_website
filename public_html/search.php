@@ -12,8 +12,13 @@
   }
 ?>
 <?php include 'html_header.php'; ?>
+<style>
+  body {
+    padding: 5px;
+  }
+</style>
     <form action="" method="get">
-      <input type="text" name="find" style="width: 11em" value="<?php echo $find; ?>" />
+      <input type="text" name="find" style="width: 10em" value="<?php echo $find; ?>" />
       <button type="submit">Search</button>
     </form>
     <ul style="list-style-type: none; padding: 0; padding-left: 5px">
