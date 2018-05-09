@@ -9,14 +9,6 @@
     return false;
   }
 
-  window.setInterval(heartbeat, 60 * 1000); // 1 minute
-
-  function heartbeat() {
-    httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', 'heartbeat.php');
-    httpRequest.send();
-  }
-
   function tabClick(i) {
     var p = document.querySelector('.fixed-column');
     var tabs = p.querySelectorAll('.tabs span');

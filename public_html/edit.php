@@ -29,24 +29,10 @@
       die();
     }
   }
-
-  $now = new DateTime();
 ?>
-<script>
-function handleKeyShortcut(e) {
-  var e = e || window.event; // for IE to cover IEs window event-object
-  if (e.ctrlKey && e.key == 's') {
-    console.log(e);
-    document.getElementById('frm').submit();
-    return false;
-  }
-}
-document.onkeydown = handleKeyShortcut;
-parent.document.onkeydown = handleKeyShortcut;
-</script>
 <form action="" method="post" id="frm" style="height: 100%">
-  <input type="hidden" name="mtime" value="<?php echo $mtime; ?>" />
-  <textarea name="contents"><?php
+  <input type="hidden" name="mtime" id="mtime" value="<?php echo $mtime; ?>" />
+  <textarea name="contents" id="contents" onkeyup="contentsChanged()" onchange="contentsChanged()"><?php
     echo getFileString($path);
   ?></textarea>
   <div class="menu">
@@ -58,4 +44,53 @@ parent.document.onkeydown = handleKeyShortcut;
   body { background-color: #FFFFEE; overflow: hidden; }
   textarea { background-color: #FFFFEE; border: 0; padding: 10px; overflow-y: scroll; overflow-x: hidden; }
 </style>
+<script>
+  var saveTimeoutId = 0;
+  var mtime = document.getElementById('mtime');
+  var contents = document.getElementById('contents');
+  var original = contents.value;
+
+  function contentsChanged() {
+    if (contents.value != original) {
+      // console.log("Contents differ - save!");
+      window.clearTimeout(saveTimeoutId);
+      saveTimeoutId = window.setTimeout(saveAsync, 10000); //10s
+    }
+    // else {
+    //   console.log("Contents unchanged.");
+    // }
+  }
+
+  function saveAsync() {
+    // console.log("saveAsync");
+    var http = new XMLHttpRequest();
+    var url = "save.php?path=<?php echo $_GET['path']; ?>";
+    var params = "mtime=" + escape(mtime.value) + "&contents=" + escape(contents.value);
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) {
+          var r = http.responseText;
+          console.log(r);
+          if (r.startsWith("OK! ")) {
+            mtime.value = r.substr(4);
+            original = contents.value;
+          }
+        }
+    }
+    http.send(params);
+  }
+
+  var shortcutModifier = window.navigator.platform.startsWith("Mac") ? "Meta" : "Ctrl";
+  function handleKeyShortcut(e) {
+    var e = e || window.event; // for IE to cover IEs window event-object
+    if ((shortcutModifier == "Meta" ? e.metaKey : e.ctrlKey) && e.key == 's') {
+      console.log(e);
+      document.getElementById('frm').submit();
+      return false;
+    }
+  }
+  document.onkeydown = handleKeyShortcut;
+</script>
 <?php include 'html_footer.php'; ?>
