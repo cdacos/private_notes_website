@@ -40,32 +40,34 @@
     <button type="submit">Save</button>
   </div>
 </form>
+<span id="msg"></span>
 <style>
   body { background-color: #FFFFEE; overflow: hidden; }
   textarea { background-color: #FFFFEE; border: 0; padding: 10px; overflow-y: scroll; overflow-x: hidden; }
+  #msg { position: absolute; top: 50px; right: 0px; padding-right: 20px; }
 </style>
 <script>
   var saveTimeoutId = 0;
   var mtime = document.getElementById('mtime');
   var contents = document.getElementById('contents');
   var original = contents.value;
+  var msg = document.getElementById('msg');
 
   function contentsChanged() {
     if (contents.value != original) {
       // console.log("Contents differ - save!");
       window.clearTimeout(saveTimeoutId);
       saveTimeoutId = window.setTimeout(saveAsync, 10000); //10s
+      msg.innerHTML = "Changes... ";
     }
-    // else {
-    //   console.log("Contents unchanged.");
-    // }
   }
 
   function saveAsync() {
-    // console.log("saveAsync");
+    if (contents.value == original) return;
     var http = new XMLHttpRequest();
     var url = "save.php?path=<?php echo $_GET['path']; ?>";
     var params = "mtime=" + escape(mtime.value) + "&contents=" + escape(contents.value);
+
     http.open("POST", url, true);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -76,9 +78,14 @@
           if (r.startsWith("OK! ")) {
             mtime.value = r.substr(4);
             original = contents.value;
+            msg.innerHTML = "Saved! ";
+          }
+          else {
+            msg.innerHTML = r;
           }
         }
     }
+
     http.send(params);
   }
 
@@ -92,5 +99,15 @@
     }
   }
   document.onkeydown = handleKeyShortcut;
+
+  window.addEventListener("beforeunload", function (e) {
+    if (contents.value != original) {
+      saveAsync();
+      var confirmationMessage = "\o/";
+      e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+      return confirmationMessage;              // Gecko, WebKit, Chrome <34
+    }
+    return "";
+  });
 </script>
 <?php include 'html_footer.php'; ?>
