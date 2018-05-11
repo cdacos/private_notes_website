@@ -52,18 +52,23 @@
   var contents = document.getElementById('contents');
   var original = contents.value;
   var msg = document.getElementById('msg');
+  var countdown = 0;
 
   function contentsChanged() {
     if (contents.value != original) {
-      // console.log("Contents differ - save!");
       window.clearTimeout(saveTimeoutId);
-      saveTimeoutId = window.setTimeout(saveAsync, 10000); //10s
-      msg.innerHTML = "Changes... ";
+      countdown = 10;
+      saveAsync();
     }
   }
 
   function saveAsync() {
-    if (contents.value == original) return;
+    countdown--;
+    if (contents.value == original || countdown > 0) {
+      saveTimeoutId = window.setTimeout(saveAsync, 1000);
+      msg.innerHTML = "Saving in... " + countdown;
+      return;
+    }
     var http = new XMLHttpRequest();
     var url = "save.php?path=<?php echo $_GET['path']; ?>";
     var params = "mtime=" + escape(mtime.value) + "&contents=" + escape(contents.value);
@@ -102,6 +107,7 @@
 
   window.addEventListener("beforeunload", function (e) {
     if (contents.value != original) {
+      countdown = 0;
       saveAsync();
       var confirmationMessage = "\o/";
       e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
