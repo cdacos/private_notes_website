@@ -42,10 +42,33 @@
         position: fixed;
         top: 0;
         right: 0;
-        background-color: #CCCCCC;
         padding: 5px;
       }
       .f_png, .f_jpg { display: none; }
+      ul.listing {
+        list-style-type: none; 
+        padding: 0;
+        padding-bottom: 50px;
+      }
+      ul.listing li {
+        padding: 5px;
+        background-color: #EEEEEE;
+        cursor: pointer;
+        color: #000000;
+        font-weight: normal;
+        font-size: 0.8em;
+      }
+      ul.listing li:hover {
+        background-color: #CCCCCC;
+      }
+      ul.listing li.selected {  
+        background-color: #333333;
+        color: #FFFFFF;
+      }
+      form#frm {
+        height: 100%;
+        margin-bottom: -40px;
+      }
     </style>
     <script>
       function interceptAllLinks() {
@@ -58,9 +81,20 @@
       }
 
       function click(link) {
-        console.log('Child: ' + link);
         location.href = link;
         return true;
+      }
+
+      function listingClick(href) {
+        var listing = document.getElementsByClassName('listing')[0];
+        var lis = listing.getElementsByTagName('li');
+
+        for (var i=0; i<lis.length; i++) {
+          var li = lis[i];
+          li.classList.toggle('selected', href === li.dataset.href);
+        }
+
+        parent.click(href)
       }
     </script>
   </head>

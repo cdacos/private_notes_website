@@ -15,23 +15,22 @@
 <style>
   body {
     padding: 5px;
+    background-color: #F0F0F0;
+    padding-bottom: 5em;
   }
 </style>
     <form action="" method="get">
-      <input type="text" name="find" style="width: 10em" value="<?php echo $find; ?>" />
+      <input type="text" name="find" style="width: 10em; font-size: 0.8em" value="<?php echo $find; ?>" />
       <button type="submit">Search</button>
     </form>
-    <ul style="list-style-type: none; padding: 0; padding-left: 5px">
+    <ul class="listing">
       <?php
         foreach ($results as $result) {
-            $details = explode(":", $result);
+            $details = explode(":", $result, 3);
             $path = getRelativePath(getFilePath(substr($details[0], 9)));
             $text = htmlspecialchars(trim($details[2]));
-            echo "<li>• <a href='edit.php?path=$path&line=$details[1]'>".$text."</a></li>\n"; 
+            echo "<li data-href='edit.php?path=$path&line=$details[1]' onclick='listingClick(this.dataset.href);'>".$text."</li>\n"; 
         }
       ?>
-    </ul>
-    <style>
-      body { background-color: #F8F8F8; }
-    </style>
+    </ul>    
 <?php include 'html_footer.php'; ?>

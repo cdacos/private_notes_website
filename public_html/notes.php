@@ -1,12 +1,30 @@
 <?php
   require 'common.php';
+  // echo session_status()." | ".PHP_SESSION_NONE." ?";
 ?>
 <?php include 'html_header.php'; ?>
 <script>
   function click(link) {
-    console.log('Parent: ' + link);
+    var q = parseQuery(link.substr(link.indexOf('?')));
+    hash = '#' + q['path'];
     document.getElementById('main').src = link;
+    if (history.pushState) {
+      history.pushState(null, null, hash);
+    }
+    else {
+      location.hash = hash;
+    }
     return false;
+  }
+
+  function parseQuery(queryString) {
+    var query = {};
+    var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+    for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+    }
+    return query;
   }
 
   function tabClick(i) {
@@ -22,6 +40,27 @@
     console.log(tabs);
     console.log(panes);
   }
+
+  function showLoginIfExpired() {
+    var http = new XMLHttpRequest();
+    var url = "heartbeat.php";
+
+    http.open("GET", url, true);
+
+    http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) {
+        var r = http.responseText;
+        console.log(r);
+        if (r.startsWith("FAIL")) {
+          location.href = 'login.php';
+        }
+      }
+    }
+
+    http.send();    
+  }
+
+  window.setInterval(showLoginIfExpired, 60000);
 </script>
 <style>
 .flex-container {
@@ -45,6 +84,8 @@
   width: 113px;
   background-color: #333333;
   color: #FFFFFF;
+  font-size: 0.8em;
+  cursor: pointer;
 }
 .tabs span.chosen {
   border-bottom: 1px solid #EEEEEE;
@@ -63,7 +104,7 @@
   <div class="fixed-column">
     <div class="tabs"><span class="chosen" onclick="tabClick(0)">Files</span><span onclick="tabClick(1)">Search</span></div>
     <div class="pane chosen">
-      <iframe id='list' src='list.php' style='height: 100%; width: 100%' frameBorder='0'></iframe>
+      <iframe id='list' src='list.php?jump=0' style='height: 100%; width: 100%' frameBorder='0'></iframe>
     </div>
     <div class="pane">
       <iframe id='search' src='search.php' style='height: 100%; width: 100%' frameBorder='0'></iframe>

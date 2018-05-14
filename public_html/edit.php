@@ -30,21 +30,20 @@
     }
   }
 ?>
-<form action="" method="post" id="frm" style="height: 100%">
+<form action="" method="post" id="frm">
   <input type="hidden" name="mtime" id="mtime" value="<?php echo $mtime; ?>" />
   <textarea name="contents" id="contents" onkeyup="contentsChanged()" onchange="contentsChanged()"><?php
     echo getFileString($path);
   ?></textarea>
   <div class="menu">
-    <a href="edit.php?path=<?php echo $_GET['path']; ?>"><?php echo $_GET['path']; ?></a>
-    <button type="submit">Save</button>
+    <button type="submit">Sync</button>
   </div>
 </form>
 <span id="msg"></span>
 <style>
   body { background-color: #FFFFEE; overflow: hidden; }
-  textarea { background-color: #FFFFEE; border: 0; padding: 10px; overflow-y: scroll; overflow-x: hidden; }
-  #msg { position: absolute; top: 50px; right: 0px; padding-right: 20px; }
+  textarea { background-color: #FFFFEE; border: 0; padding: 0; overflow-y: scroll; overflow-x: hidden; font-size: 1em; padding: 0 20px; }
+  #msg { position: absolute; top: 50px; right: 0px; padding-right: 20px; color: #CCCCCC }
 </style>
 <script>
   var saveTimeoutId = 0;

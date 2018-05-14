@@ -19,31 +19,29 @@
 <style>
   body {
     padding: 5px;
+    background-color: #F0F0F0; 
   }
 </style>
 <form action='' method='get'>
-  <input type='text' name='jump' style="width: 10em" />
+  <input type='text' name='jump' style="width: 10em; font-size: 0.8em" />
   <button type='submit'>Jump</button>
 </form>
-<ul style="list-style-type: none; padding: 0; padding-left: 5px">
+<ul class="listing">
 <?php
   $lst = getDirContents(getNotesDir());
   rsort($lst);
   foreach ($lst as $file) {
     $ext = pathinfo($file, PATHINFO_EXTENSION);
-    echo "<li class='f_$ext'><a href='edit.php?path=$file'>$file</a></li>\n";
+    echo "<li class='f_$ext' data-href='edit.php?path=$file' onclick='listingClick(this.dataset.href);'>$file</li>\n";
   }
 ?>
 </ul>
 <?php
   if (strlen($jump_to) > 0) { ?>
 <script>
-  parent.click('edit.php?path=<?php echo $jump_to; ?>');
+  listingClick('edit.php?path=<?php echo $jump_to; ?>');
 </script>
 <?php
   }
 ?>
-<style>
-  body { background-color: #F0F0F0; }
-</style>
 <?php include 'html_footer.php'; ?>
