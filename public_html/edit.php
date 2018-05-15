@@ -70,7 +70,7 @@
     }
     var http = new XMLHttpRequest();
     var url = "save.php?path=<?php echo $_GET['path']; ?>";
-    var params = "mtime=" + escape(mtime.value) + "&contents=" + escape(contents.value);
+    var params = "mtime=" + encodeURIComponent(mtime.value) + "&contents=" + encodeURIComponent(contents.value);
 
     http.open("POST", url, true);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
