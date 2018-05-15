@@ -41,5 +41,10 @@
       <button type="submit">Login</button>
     </form>
   </div>
+<script>
+  if (top.location != location) {
+    top.location.href = document.location.href ;
+  }
+</script>
 <?php include 'html_footer.php'; ?>
 
