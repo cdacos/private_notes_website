@@ -41,8 +41,8 @@
 </form>
 <span id="msg"></span>
 <style>
-  body { background-color: #FFFFEE; overflow: hidden; }
-  textarea { background-color: #FFFFEE; border: 0; padding: 0; overflow-y: scroll; overflow-x: hidden; font-size: 1em; padding: 0 20px; }
+  body { background-color: #FFFFEE; overflow: hidden; margin-top: 0px; }
+  textarea { background-color: #FFFFEE; border: 0; padding: 0; overflow-y: scroll; overflow-x: hidden; font-size: 1em; padding: 20px; box-sizing: border-box; }
   #msg { position: absolute; top: 50px; right: 0px; padding-right: 20px; color: #CCCCCC }
 </style>
 <script>
