@@ -31,6 +31,9 @@
   }
 
   function getFilePath($path) {
+    if ($path === 'logs/access.log' || $path === 'logs/error.log') {
+      return realpath(__DIR__.'/../'.$path);
+    }
     if (substr($path, 0, 1) === '/' || strpos($path, '..') !== false) {
       return '';
     }
@@ -58,7 +61,7 @@
 
   function getMimeType($path) {
     $ext = pathinfo($path, PATHINFO_EXTENSION);
-    if ($ext === 'md' || $ext === 'txt') {
+    if ($ext === 'md' || $ext === 'txt' || $ext === 'log') {
       return 'text/plain';
     }
     else if ($ext === 'htm' || $ext === 'html') {

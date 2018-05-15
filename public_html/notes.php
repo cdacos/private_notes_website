@@ -31,7 +31,7 @@
     var p = document.querySelector('.fixed-column');
     var tabs = p.querySelectorAll('.tabs span');
     var panes = p.querySelectorAll('.pane');
-    for (var j=0; j<2; j++) {
+    for (var j=0; j<tabs.length; j++) {
       tabs[j].classList.remove('chosen');
       panes[j].classList.remove('chosen')
     }
@@ -81,7 +81,7 @@
   display: inline-block;
   padding: 2px 5px;
   border: 1px solid #000000;
-  width: 113px;
+  width: 69px;
   background-color: #333333;
   color: #FFFFFF;
   font-size: 0.8em;
@@ -102,12 +102,20 @@
 </style>
 <div class="flex-container">
   <div class="fixed-column">
-    <div class="tabs"><span class="chosen" onclick="tabClick(0)">Files</span><span onclick="tabClick(1)">Search</span></div>
+    <div class="tabs">
+      <span class="chosen" onclick="tabClick(0)">Files</span>
+      <span onclick="tabClick(1)">Search</span>
+      <span onclick="tabClick(2)">Misc</span>
+    </div>
     <div class="pane chosen">
       <iframe id='list' src='list.php?jump=0' style='height: 100%; width: 100%' frameBorder='0'></iframe>
     </div>
     <div class="pane">
       <iframe id='search' src='search.php' style='height: 100%; width: 100%' frameBorder='0'></iframe>
+    </div>
+    <div class="pane" style="padding: 10px">
+      <a href="file.php?path=logs/access.log">access log</a><br />
+      <a href="file.php?path=logs/error.log">error log</a><br />
     </div>
   </div>
   <div class="flex-column">

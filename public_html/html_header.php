@@ -41,7 +41,7 @@
       .menu {
         position: fixed;
         top: 0;
-        right: 0;
+        right: 10px;
         padding: 5px;
       }
       .f_png, .f_jpg { display: none; }

@@ -1,5 +1,5 @@
     <script>
-      interceptAllLinks();
+      // interceptAllLinks();
     </script>
   </body>
 </html>
