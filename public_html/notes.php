@@ -52,7 +52,7 @@
         var r = http.responseText;
         console.log(r);
         if (r.startsWith("FAIL")) {
-          location.href = 'login.php';
+          location.href = 'start.php';
         }
       }
     }
