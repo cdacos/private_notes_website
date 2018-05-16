@@ -22,9 +22,9 @@
     background-color: #F0F0F0; 
   }
 </style>
-<form action='' method='get'>
+<form action='' method='get' class='action'>
   <input type='text' name='jump' style="width: 10em; font-size: 0.8em" />
-  <button type='submit'>Jump</button>
+  <button type='submit' class='icon'>▶️</button>
 </form>
 <ul class="listing">
 <?php

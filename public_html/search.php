@@ -19,9 +19,10 @@
     padding-bottom: 5em;
   }
 </style>
-    <form action="" method="get">
+    <form action="" method="get" class="action">
       <input type="text" name="find" style="width: 10em; font-size: 0.8em" value="<?php echo $find; ?>" />
-      <button type="submit">Search</button>
+      <button type="submit" class="icon">🔎</button>
+      <a class="icon" href="search.php?find=%5C-+%5C%5B+%5C%5D">☑️</a>
     </form>
     <ul class="listing">
       <?php

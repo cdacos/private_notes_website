@@ -69,6 +69,22 @@
         height: 100%;
         margin-bottom: -40px;
       }
+      form.action {
+        display:flex; 
+        flex-direction: row; 
+        /* justify-content: center; 
+        align-items: center */
+      }
+      .icon {
+        background: none;
+        border: none;
+        font-size: 1.2em;
+        padding: 2px;
+        margin: 0 5px;
+      }
+      .icon:hover {
+        background-color: #FFFFFF;
+      }
     </style>
     <script>
       function interceptAllLinks() {

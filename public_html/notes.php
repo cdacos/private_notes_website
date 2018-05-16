@@ -60,7 +60,7 @@
     http.send();    
   }
 
-  window.setInterval(showLoginIfExpired, 60000);
+  // window.setInterval(showLoginIfExpired, 60000);
 </script>
 <style>
 .flex-container {
