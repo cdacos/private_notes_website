@@ -17,6 +17,7 @@
     padding: 5px;
     background-color: #F0F0F0;
     padding-bottom: 5em;
+    box-sizing: border-box;
   }
 </style>
     <form action="" method="get" class="action">
@@ -24,12 +25,17 @@
       <button type="submit" class="icon">🔎</button>
       <a class="icon" href="search.php?find=%5C-+%5C%5B+%5C%5D">☑️</a>
     </form>
-    <ul class="listing">
+    <ul>
       <?php
+        $last_file = '';
         foreach ($results as $result) {
             $details = explode(":", $result, 3);
             $path = getRelativePath(getFilePath(substr($details[0], 9)));
             $text = htmlspecialchars(trim($details[2]));
+            if ($last_file !== $path) {
+              echo "</ul><h3 class='list_h' onclick='this.nextSibling.classList.toggle(\"hide\")'>".$path."</h3><ul class='listing'>";
+              $last_file = $path;
+            }
             echo "<li data-href='edit.php?path=$path&line=$details[1]' onclick='listingClick(this.dataset.href);'>".$text."</li>\n"; 
         }
       ?>

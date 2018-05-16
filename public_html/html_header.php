@@ -48,7 +48,6 @@
       ul.listing {
         list-style-type: none; 
         padding: 0;
-        padding-bottom: 50px;
       }
       ul.listing li {
         padding: 5px;
@@ -81,9 +80,17 @@
         font-size: 1.2em;
         padding: 2px;
         margin: 0 5px;
+        cursor: pointer;
       }
       .icon:hover {
         background-color: #FFFFFF;
+      }
+      .hide {
+        display: none;
+      }
+      .list_h {
+        font-size: 0.8em;
+        cursor: pointer;
       }
     </style>
     <script>
