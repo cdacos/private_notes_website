@@ -88,4 +88,35 @@
     }
     return $d->format('# l, F j, Y')."\n\n";
   }
+
+  function saveFile($path, $text) {
+    $dir = dirname($path);
+    if (!file_exists($dir)) {
+      $filemode = 0775;
+      mkdir($dir, $filemode, true);
+      $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+      foreach($iterator as $item) {
+        chmod($item, $filemode);
+      }
+    }
+    file_put_contents($path, $text);
+  }
+
+  function dirSort($a, $b) {
+    // Dates are in reverse order, else alphabetic
+    $a1 = substr($a, 0, 1);
+    $b1 = substr($b, 0, 1);
+    if (is_numeric($a1) && is_numeric($b1)) {
+      return strcmp($b, $a);
+    }
+    else if (!is_numeric($a1) && is_numeric($b1)) {
+      return -1;
+    }
+    else if (is_numeric($a1) && !is_numeric($b1)) {
+      return 1;
+    }
+    else {
+      return strcmp($a, $b);
+    }
+  }
 ?>

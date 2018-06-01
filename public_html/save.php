@@ -17,11 +17,7 @@
       echo "FAIL! The file has changed. Save aborted. Cut and paste then revert.";
     }
     else if (array_key_exists('contents', $_POST)) {
-      $dir = dirname($path);
-      if (!file_exists($dir)) {
-        mkdir($dir, 0, true);
-      }
-      file_put_contents($path, $_POST['contents']);
+      saveFile($path, $_POST['contents']);
       clearstatcache();
       echo "OK! ".filemtime($path);
     }

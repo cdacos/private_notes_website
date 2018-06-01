@@ -29,7 +29,7 @@
 <ul class="listing">
 <?php
   $lst = getDirContents(getNotesDir());
-  rsort($lst);
+  usort($lst, 'dirSort');
   foreach ($lst as $file) {
     $ext = pathinfo($file, PATHINFO_EXTENSION);
     echo "<li class='f_$ext' data-href='edit.php?path=$file' onclick='listingClick(this.dataset.href);'>$file</li>\n";
