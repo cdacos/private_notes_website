@@ -41,6 +41,15 @@
   textarea { background-color: #FFFFEE; border: 0; padding: 0; overflow-y: scroll; overflow-x: hidden; font-size: 1em; padding: 20px; box-sizing: border-box; }
   #msg { position: absolute; top: 50px; right: 0px; padding-right: 20px; color: #CCCCCC }
 </style>
+<?php
+echo getGUID();
+echo " - ";
+echo ($_SERVER['REMOTE_ADDR']);
+echo " - ";
+echo ($_SERVER['HTTP_USER_AGENT']);
+echo " - ";
+echo date(DATE_ISO8601, $_SERVER['REQUEST_TIME']);
+?>
 <script>
   var saveTimeoutId = 0;
   var mtime = document.getElementById('mtime');
