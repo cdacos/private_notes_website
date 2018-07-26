@@ -18,6 +18,10 @@
     return realpath(__DIR__.'/../notes').'/';
   }
 
+  function getCodeDir() {
+    return realpath(__DIR__.'/..').'/';
+  }
+
   function getDirContents($dir, &$results = array()) {
     $files = scandir($dir);
     foreach($files as $key => $value){
