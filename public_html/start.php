@@ -1,4 +1,6 @@
 <?php
+  require 'functions.php';
+
   session_start();
   if(isset($_SESSION['login'])) {
     header('LOCATION:notes.php');
@@ -25,6 +27,7 @@
         $hash = $config['notes']['password_hash'];
         if(password_verify($password, $hash)){
           $_SESSION['login'] = true;
+          writeLastLogin();
           header('LOCATION:notes.php');
           die();
         } 
@@ -41,6 +44,10 @@
       <button type="submit">Login</button>
     </form>
   </div>
+<div class="container">
+  <h3>Last login</h3>
+  <?php echo substr(getFileString(getFilePath('/last_login')), 40); ?>
+</div>
 <script>
   if (top.location != location) {
     top.location.href = document.location.href ;
