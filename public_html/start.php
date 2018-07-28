@@ -1,8 +1,7 @@
 <?php
   require 'functions.php';
 
-  session_start();
-  if(isset($_SESSION['login'])) {
+  if(isset($_COOKIE['token'])) {
     header('LOCATION:notes.php');
     die();
   }
@@ -26,8 +25,7 @@
         $config = parse_ini_file(__DIR__ . '/../config.ini', true);
         $hash = $config['notes']['password_hash'];
         if(password_verify($password, $hash)){
-          $_SESSION['login'] = true;
-          writeLastLogin();
+          doLogin();
           header('LOCATION:notes.php');
           die();
         } 

@@ -1,7 +1,6 @@
 <?php
-  session_start();
-  session_unset();
-  session_destroy();
+  unset($_COOKIE['token']);
+  setcookie('token', '', time() - 3600, '/');
   header('LOCATION:start.php');
   die();
 ?>

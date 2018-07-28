@@ -1,22 +1,36 @@
+
 <?php
-function writeLastLogin() {
-    $guid = getGUID();
-    $contents = $guid.' | '.getClientDetails();
-    saveFile(getFilePath('/last_login'), $contents);
-    setcookie('active_login', $guid, time()+28800);
+function doLogin() {
+    updateLogin(getGUID());
 }
 
-function checkActiveLogin() {
+function updateLogin($guid) {
+    $client = getClientDetails();
+    $contents = $guid.' | '.getClientDetails();
+    saveFile(getFilePath('/last_login'), $contents);
+    setcookie('token', $guid, time()+28800);
+    return $guid;
+}
+
+function checkLogin() {
     $contents = getFileString(getFilePath('/last_login'));
-    $active_login = '';
-    if (isset($_COOKIE['active_login'])) {
-        $active_login = $_COOKIE['active_login'];
+    $token = '';
+    if (isset($_COOKIE['token'])) {
+        $token = $_COOKIE['token'];
     }
-    if (substr($contents, 0, 38) === $active_login) {
-        return getClientDetails();
+    $guid = substr($contents, 0, 38);
+    if (strlen($guid) === 38 && $guid === $token) {
+        return updateLogin($guid);
     }
-    header('LOCATION:logout.php');
-    die();
+    return '';
+}
+
+function logoutIfInvalid() {
+    $c = checkLogin();
+    if (strlen($c) == 0) {
+        header('LOCATION:logout.php');
+        die();
+    }
 }
 
   function getNotesDir() {

@@ -1,6 +1,5 @@
 <?php
   require 'common.php';
-  // echo session_status()." | ".PHP_SESSION_NONE." ?";
 ?>
 <?php include 'html_header.php'; ?>
 <script>
@@ -116,6 +115,8 @@
     <div class="pane" style="padding: 10px">
       <a href="file.php?path=logs/access.log">access log</a><br />
       <a href="file.php?path=logs/error.log">error log</a><br />
+      <a href="pull_code.php">pull code</a><br />
+      <a href="logout.php">logout</a><br />
     </div>
   </div>
   <div class="flex-column">
