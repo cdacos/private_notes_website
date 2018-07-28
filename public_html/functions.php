@@ -1,5 +1,6 @@
-
 <?php
+$_checked_login = 'ZAZ';
+
 function doLogin() {
     updateLogin(getGUID());
 }
@@ -21,17 +22,25 @@ function checkLogin() {
     }
     $guid = substr($contents, 0, 38);
     if (strlen($guid) === 38 && $guid === $token) {
-        return updateLogin($guid);
+        updateLogin($guid);
+        return substr($contents, 41);
     }
+    unset($_COOKIE['token']);
+    setcookie('token', '', time() - 3600, '/');
     return '';
 }
 
 function logoutIfInvalid() {
     $c = checkLogin();
+    $GLOBALS['_checked_login'] = $c;
     if (strlen($c) == 0) {
-        header('LOCATION:logout.php');
-        die();
+        doLogout();
     }
+}
+
+function doLogout() {
+    header('LOCATION:start.php');
+    die();
 }
 
   function getNotesDir() {

@@ -1,7 +1,7 @@
 <?php
   require 'functions.php';
 
-  if(isset($_COOKIE['token'])) {
+  if(strlen(checkLogin()) > 0) {
     header('LOCATION:notes.php');
     die();
   }

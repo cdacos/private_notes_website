@@ -117,6 +117,7 @@
       <a href="file.php?path=logs/error.log">error log</a><br />
       <a href="pull_code.php">pull code</a><br />
       <a href="logout.php">logout</a><br />
+      <p><?php echo $_checked_login; ?></p>
     </div>
   </div>
   <div class="flex-column">
