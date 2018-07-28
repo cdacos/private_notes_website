@@ -8,7 +8,8 @@ function updateLogin($guid) {
     $client = getClientDetails();
     $contents = $guid.' | '.getClientDetails();
     saveFile(getFilePath('/last_login'), $contents);
-    setcookie('token', $guid, time()+28800);
+    // samesite=strict uses a PHP < 7.3 bug/hack - see https://stackoverflow.com/a/46971326/199134
+    setcookie('token', $guid, time()+28800, '/; samesite=strict', 'journal.cdacosta.com', TRUE, TRUE);
     return $guid;
 }
 
