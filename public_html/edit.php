@@ -75,9 +75,13 @@
         if(http.readyState == 4 && http.status == 200) {
           var r = http.responseText;
           console.log(r);
-          if (r.startsWith("OK! ")) {
+          var prefix = r.substring(0, 4);
+          var suffix = r.length > 4 ? r.substring(4) : "";
+          console.log(prefix);
+          console.log(suffix);
+          if (prefix === "OK! ") {
             console.log(mtime.value);
-            mtime.value = r.substr(4);
+            mtime.value = suffix;
             console.log(mtime.value);
             original = contents.value;
             msg.innerHTML = "Saved! ";
