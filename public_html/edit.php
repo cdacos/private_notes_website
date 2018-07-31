@@ -76,11 +76,14 @@
           var r = http.responseText;
           console.log(r);
           if (r.startsWith("OK! ")) {
+            console.log(mtime.value);
             mtime.value = r.substr(4);
+            console.log(mtime.value);
             original = contents.value;
             msg.innerHTML = "Saved! ";
           }
           else {
+            console.log("Not OK?");
             msg.innerHTML = r;
           }
         }
