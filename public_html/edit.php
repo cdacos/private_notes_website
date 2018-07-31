@@ -75,12 +75,11 @@
         if(http.readyState == 4 && http.status == 200) {
           var r = http.responseText.trim();
           console.log(r);
-          var prefix = r.substring(0, 4);
+          var prefix = r.length > 4 ? r.substring(0, 4) : "";
           var suffix = r.length > 4 ? r.substring(4) : "";
-          console.log(prefix);
-          console.log(suffix);
+          console.log("prefix:" + prefix + "|");
+          console.log("suffix:" + suffix + "|");
           if (prefix === "OK! ") {
-            console.log(mtime.value);
             mtime.value = suffix;
             console.log(mtime.value);
             original = contents.value;
