@@ -18,7 +18,6 @@
     }
     else if (array_key_exists('contents', $_POST)) {
       saveFile($path, $_POST['contents']);
-      clearstatcache();
       echo "OK! ".filemtime($path);
     }
   }
