@@ -73,7 +73,7 @@
 
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) {
-          var r = http.responseText;
+          var r = http.responseText.trim();
           console.log(r);
           var prefix = r.substring(0, 4);
           var suffix = r.length > 4 ? r.substring(4) : "";
