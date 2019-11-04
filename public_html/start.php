@@ -5,6 +5,17 @@
     header('LOCATION:notes.php');
     die();
   }
+
+  if(isset($_POST['password'])){
+    $password = $_POST['password'];
+    $config = parse_ini_file(__DIR__ . '/../config.ini', true);
+    $hash = $config['password_hash'];
+    if(password_verify($password, $hash)){
+      doLogin();
+      header('LOCATION:notes.php');
+      die();
+    }
+  }
 ?>
 <?php include 'html_header.php'; ?>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,17 +32,7 @@
     <h3 class="text-center">Login</h3>
     <?php
       if(isset($_POST['password'])){
-        $password = $_POST['password'];
-        $config = parse_ini_file(__DIR__ . '/../config.ini', true);
-        $hash = $config['notes']['password_hash'];
-        if(password_verify($password, $hash)){
-          doLogin();
-          header('LOCATION:notes.php');
-          die();
-        } 
-        else {
-          echo "<div class='alert alert-danger'>Password is incorrect.</div>";
-        }
+        "<div class='alert alert-danger'>Password is incorrect.</div>";
       }
     ?>
     <form action="" method="post">

@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    # http://geekyplatypus.com/making-your-dockerised-php-application-even-better/
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./public_html:/code
+            - ./nginx-site.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - code-network
+    php:
+        build: .
+        volumes:
+            - ./public_html:/code
+            - ./php-log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+            - ../secrets/private_notes_website/config.ini:/config.ini
+            - ../notes:/notes:rw
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge

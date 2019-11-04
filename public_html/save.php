@@ -9,7 +9,10 @@
     die();
   }
 
-  $mtime = filemtime($path);
+  $mtime = '';
+  if (file_exists($path)) {
+    $mtime = filemtime($path);
+  }
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old_mtime = (int)$_POST['mtime'];

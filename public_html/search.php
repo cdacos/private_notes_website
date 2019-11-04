@@ -7,7 +7,7 @@
   if (array_key_exists('find', $_GET)) {
     $find = $_GET['find'];
     if (strlen($find) > 0) {
-        exec("rg -n -i -e '$find' ../notes", $results);
+        exec("grep -r -n -i -e '$find' ../notes | sort -r", $results);
     }
   }
 ?>

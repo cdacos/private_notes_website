@@ -1,5 +1,6 @@
 <?php
 $_checked_login = 'ZAZ';
+$_last_login_file = '/var/tmp/private_notes_last_login';
 
 function doLogin() {
     updateLogin(getGUID());
@@ -8,14 +9,13 @@ function doLogin() {
 function updateLogin($guid) {
     $client = getClientDetails();
     $contents = $guid.' | '.getClientDetails();
-    saveFile(getFilePath('/last_login'), $contents);
-    // samesite=strict uses a PHP < 7.3 bug/hack - see https://stackoverflow.com/a/46971326/199134
-    setcookie('token', $guid, time()+28800, '/; samesite=strict', 'journal.cdacosta.com', TRUE, TRUE);
+    saveFile($GLOBALS['_last_login_file'], $contents);
+    setcookie('token', $guid, ['expires' => time()+28800, 'samesite' => 'Strict']);
     return $guid;
 }
 
 function checkLogin() {
-    $contents = getFileString(getFilePath('/last_login'));
+    $contents = getFileString($GLOBALS['_last_login_file']);
     $token = '';
     if (isset($_COOKIE['token'])) {
         $token = $_COOKIE['token'];
@@ -39,12 +39,13 @@ function logoutIfInvalid() {
 }
 
 function doLogout() {
+    setcookie('token', '');
     header('LOCATION:start.php');
     die();
 }
 
   function getNotesDir() {
-    return realpath(__DIR__.'/../notes').'/';
+    return '/notes/';
   }
 
   function getCodeDir() {
@@ -69,11 +70,8 @@ function doLogout() {
   }
 
   function getFilePath($path) {
-    if ($path === '/last_login') {
-      return realpath(__DIR__.'/../last_login');
-    }
     if ($path === 'logs/access.log' || $path === 'logs/error.log') {
-      return realpath(__DIR__.'/../'.$path);
+      return realpath('/var/'.$path);
     }
     if (substr($path, 0, 1) === '/' || strpos($path, '..') !== false) {
       return '';
@@ -133,12 +131,12 @@ function doLogout() {
   function saveFile($path, $text) {
     $dir = dirname($path);
     if (!file_exists($dir)) {
-      $filemode = 0775;
+      $filemode = 0755;
       mkdir($dir, $filemode, true);
-      $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
-      foreach($iterator as $item) {
-        chmod($item, $filemode);
-      }
+      // $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+      // foreach($iterator as $item) {
+      //   chmod($item, $filemode);
+      // }
     }
     file_put_contents($path, $text);
     clearstatcache();
